@@ -34,8 +34,10 @@ echo \
 
 echo "________ Getting Docker _____________"
 
+# sudo apt-get remove docker docker-engine docker.io containerd runc
 
 sudo apt-get -y update
+sudo apt-get -y install uidmap
 curl -fsSL https://get.docker.com/rootless | sh
 echo "export PATH=/usr/bin:$PATH" >> $HOME/.bashrc
 echo "export DOCKER_HOST=unix:///run/user/$(id -u)/docker" >> $HOME/.bashrc
