@@ -61,7 +61,6 @@ docker pull jhuaplbio/basestack_mytax
 docker pull florianbw/pavian
 
 
-
 #Update Minknow
 
 echo "________Getting Minion-nc__________"
@@ -75,7 +74,10 @@ sudo apt-get -y update
 sudo apt-get install -y minion-nc
 
 
+echo "____Getting Basestack___-"
 
+cd $HOME/Desktop
+curl $(curl -s https://api.github.com/repos/jhuapl-bio/Basestack/releases/latest | grep "tag_name" | awk '{print "https://github.com/jhuapl-bio/Basestack/releases/download/" substr($2, 2, length($2)-3) "/Basestack.AppImage"}')
 
 # Config MinKNOW 
 
