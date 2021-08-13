@@ -38,9 +38,11 @@ echo "________ Getting Docker _____________"
 
 sudo apt-get -y update
 sudo apt-get -y install uidmap
+echo "user:100000:65536"  | sudo tee /etc/subuid
+echo "user:100000:65536"  | sudo tee /etc/subgid
 curl -fsSL https://get.docker.com/rootless | sh
-echo "export PATH=/usr/bin:$PATH" >> $HOME/.bashrc
-echo "export DOCKER_HOST=unix:///run/user/$(id -u)/docker" >> $HOME/.bashrc
+echo "PATH=$HOME/bin:$PATH" >> $HOME/.bashrc
+echo "DOCKER_HOST=unix:///run/user/$(id -u)/docker" >> $HOME/.bashrc
 
 sudo apt-get install -y docker-ce-rootless-extras
 
@@ -52,7 +54,7 @@ sudo apt-get install -y docker-ce-rootless-extras
 # Optimizing Docker for Rootful users
 
 
-echo "________ Rootful Define _____________"
+# echo "________ Rootful Define _____________DEPR.____"
 
 # sudo groupadd docker
 
@@ -65,7 +67,6 @@ echo "________ Rootful Define _____________"
 # sudo service docker restart
 
 # Getting Modules
-
 docker pull jhuaplbio/basestack_consensus
 docker pull jhuaplbio/basestack_mytax
 docker pull florianbw/pavian
@@ -87,13 +88,11 @@ sudo apt-get install -y minion-nc
 echo "____Getting Basestack___-"
 
 cd $HOME/Desktop
-curl $(curl -s https://api.github.com/repos/jhuapl-bio/Basestack/releases/latest | grep "tag_name" | awk '{print "https://github.com/jhuapl-bio/Basestack/releases/download/" substr($2, 2, length($2)-3) "/Basestack.AppImage"}')
+wget $(curl -s https://api.github.com/repos/jhuapl-bio/Basestack/releases/latest | grep "tag_name" | awk '{print "https://github.com/jhuapl-bio/Basestack/releases/download/" substr($2, 2, length($2)-3) "/Basestack.AppImage"}')
+sudo chmod +x Basestack.AppImage
 
 # Config MinKNOW 
-
 echo "________Configuring Minion-nc__________"
-
-
 sudo /opt/ont/minknow/bin/config_editor --filename /opt/ont/minknow/conf/sys_conf --conf system --set on_acquisition_ping_failure=ignore
 sudo service minknow restart # Resart minknow
 
