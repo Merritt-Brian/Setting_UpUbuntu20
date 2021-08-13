@@ -36,23 +36,31 @@ echo "________ Getting Docker _____________"
 
 
 sudo apt-get -y update
-sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-sudo systemctl restart docker 
+curl -fsSL https://get.docker.com/rootless | sh
+echo "export PATH=/usr/bin:$PATH" >> $HOME/.bashrc
+echo "export DOCKER_HOST=unix:///run/user/$(id -u)/docker" >> $HOME/.bashrc
+
+sudo apt-get install -y docker-ce-rootless-extras
+
+
+
+# sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+# sudo systemctl restart docker 
 
 # Optimizing Docker for Rootful users
 
 
 echo "________ Rootful Define _____________"
 
-sudo groupadd docker
+# sudo groupadd docker
 
-sudo usermod -aG docker $USER
-sudo sed -i "1s/^/$USER:$(id -u):1\n/" /etc/subuid
-sudo sed -i "1s/^/$USER:$(id -g):1\n/" /etc/subgid
+# sudo usermod -aG docker $USER
+# sudo sed -i "1s/^/$USER:$(id -u):1\n/" /etc/subuid
+# sudo sed -i "1s/^/$USER:$(id -g):1\n/" /etc/subgid
 
-echo "{\"userns-remap\": \"$USER\"}" | sudo tee -a /etc/docker/daemon.json
-echo "________ Restarting Docker _____________"
-sudo service docker restart
+# echo "{\"userns-remap\": \"$USER\"}" | sudo tee -a /etc/docker/daemon.json
+# echo "________ Restarting Docker _____________"
+# sudo service docker restart
 
 # Getting Modules
 
