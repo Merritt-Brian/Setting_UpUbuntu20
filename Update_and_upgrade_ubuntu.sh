@@ -155,9 +155,9 @@ if [[ $DATA = true ]]; then
   gdown --id 1zrgwheJxhMTvd7zu0fuRhVYYM0aGY5XS && \
     unzip test-data.zip && \
     rm test-data.zip && \
-    mkdir -p $HOME/Desktop/data/test-data &&\
-    mv test-data $HOME/Desktop/data/test-data/ncov2019
-  
+    mkdir -p $HOME/Desktop/test-data &&\
+    mv test-data $HOME/Desktop/test-data/ncov2019
+
 
 
 
