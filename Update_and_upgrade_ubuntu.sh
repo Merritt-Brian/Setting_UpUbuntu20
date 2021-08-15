@@ -159,7 +159,11 @@ if [[ $DATA = true ]]; then
     mv test-data $HOME/Desktop/test-data/ncov2019
 
 
-
+  gdown --id 1yP0rIBb6EGOp3clqk1HSShCMFhBZEt37 &&\
+    unzip flukraken-test.zip && \
+    rm flukraken-test.zip && \
+    mkdir -p $HOME/Desktop/test-data &&\
+    mv flukraken-test $HOME/Desktop/test-data/flu
 
 
 fi
