@@ -19,7 +19,7 @@ BASESTACK="false"
 
 
 
-while getopts "hi:o:s:m:f" OPTION; do
+while getopts "hukdmb" OPTION; do
   case $OPTION in
   h)
     usage
