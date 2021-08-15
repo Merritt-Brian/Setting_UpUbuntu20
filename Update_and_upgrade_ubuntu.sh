@@ -16,10 +16,11 @@ MINKNOW="false"
 DOCKER="false"
 MODULES="false"
 BASESTACK="false"
+ALL="false"
+DATA="false"
 
 
-
-while getopts "hukdmb" OPTION; do
+while getopts "hukdmbat" OPTION; do
   case $OPTION in
   h)
     usage
@@ -30,6 +31,8 @@ while getopts "hukdmb" OPTION; do
   d) DOCKER='true';;
   m) MODULES='true';;
   b) BASESTACK='true';;
+  a) ALL='true';;
+  t) DATA='true';;
 ?)
     usage
     exit
@@ -37,7 +40,14 @@ while getopts "hukdmb" OPTION; do
   esac
 done
 
-
+if [[ $ALL = true ]]; then 
+  UPGRADE="true"
+  MINKNOW="true"
+  DOCKER="true"
+  MODULES="true"
+  BASESTACK="true"
+  DATA="true"
+fi
 
 
 
@@ -138,6 +148,20 @@ if [[ $MINKNOW = true ]]; then
   echo "________Configuring Minion-nc__________"
   sudo /opt/ont/minknow/bin/config_editor --filename /opt/ont/minknow/conf/sys_conf --conf system --set on_acquisition_ping_failure=ignore
   sudo service minknow restart # Resart minknow
+fi
+
+if [[ $DATA = true ]]; then 
+  pip install gdown
+  gdown --id 1zrgwheJxhMTvd7zu0fuRhVYYM0aGY5XS && \
+    unzip test-data.zip && \
+    rm test-data.zip && \
+    mkdir -p $HOME/Desktop/data/test-data &&\
+    mv test-data $HOME/Desktop/data/test-data/ncov2019
+  
+
+
+
+
 fi
 
 
