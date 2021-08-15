@@ -83,11 +83,11 @@ if [[ $DOCKER = true ]]; then
   echo "user:100000:65536"  | sudo tee /etc/subuid
   echo "user:100000:65536"  | sudo tee /etc/subgid
   curl -fsSL https://get.docker.com/rootless | sh
-  echo "PATH=$HOME/bin:$PATH" >> $HOME/.bashrc
-  echo "DOCKER_HOST=unix:///run/user/$(id -u)/docker" >> $HOME/.bashrc
+  echo "export PATH='$'HOME/bin:'$'PATH" >> $HOME/.bashrc
+  echo "DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock" >> $HOME/.bashrc
 
   sudo apt-get install -y docker-ce-rootless-extras
-
+  docker context use rootless
 fi
 
 # sudo apt-get -y install docker-ce docker-ce-cli containerd.io
